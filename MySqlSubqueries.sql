@@ -75,18 +75,24 @@ SELECT * FROM serviceInfo;
 SELECT * FROM personalInfo;
 
 /* Получите контактные данные сотрудников (номера телефонов, место жительства) */
-SELECT staff.phone, (SELECT personalInfo.adress FROM personalInfo WHERE staff.id = personalInfo.staff_id) as phone
+SELECT staff.name, staff.phone, (SELECT personalInfo.adress FROM personalInfo WHERE staff.id = personalInfo.staff_id) as phone
 FROM staff;
 
 /* Получите информацию о дате рождения всех холостых сотрудников и их номера
 В данной бд холостых 3 человека */
-SELECT personalInfo.birth_day, (SELECT staff.phone FROM staff WHERE staff.id = personalInfo.staff_id) as phone
+SELECT 
+	(SELECT staff.name FROM staff WHERE staff.id = personalInfo.staff_id) as name,
+	personalInfo.birth_day, 
+	(SELECT staff.phone FROM staff WHERE staff.id = personalInfo.staff_id) as phone
 FROM personalInfo
 WHERE personalInfo.maritalStatus IN ('не женат', 'не замужем');
 
 /* Получите информацию обо всех менеджерах компании: дату рождения и номер телефона
 В данной бд менеджеров также 3 человека */
-SELECT personalInfo.birth_day, (SELECT staff.phone FROM staff WHERE staff.id = personalInfo.staff_id) as phone
+SELECT 
+  	(SELECT staff.name FROM staff WHERE staff.id = personalInfo.staff_id) as name,
+    personalInfo.birth_day, 
+    (SELECT staff.phone FROM staff WHERE staff.id = personalInfo.staff_id) as phone
 FROM personalInfo
 WHERE personalInfo.staff_id IN (SELECT serviceInfo.staff_id FROM serviceInfo WHERE serviceInfo.position = 'Менеджер');
 
