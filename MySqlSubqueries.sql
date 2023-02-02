@@ -90,7 +90,7 @@ WHERE personalInfo.maritalStatus IN ('не женат', 'не замужем');
 /* Получите информацию обо всех менеджерах компании: дату рождения и номер телефона
 В данной бд менеджеров также 3 человека */
 SELECT 
-    (SELECT staff.name FROM staff WHERE staff.id = personalInfo.staff_id) as name,
+(SELECT staff.name FROM staff WHERE staff.id = personalInfo.staff_id) as name,
     personalInfo.birth_day, 
     (SELECT staff.phone FROM staff WHERE staff.id = personalInfo.staff_id) as phone
 FROM personalInfo
